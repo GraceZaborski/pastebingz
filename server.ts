@@ -37,6 +37,17 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.post("/", async (req, res) => {
+  try {
+    const { quotes } = req.body
+    const newQuote = await client.query("INSERT INTO pastebindb (input) VALUES($1) RETURNING *", [quotes])
+    res.json(newQuote.rows)
+  }
+  catch (error) {
+    console.error(error.message)
+  }
+});
+
 
 //Start the server on the given port
 const port = process.env.PORT;
