@@ -31,7 +31,7 @@ app.use(cors()) //add CORS support to each following route handler
 const client = new Client(dbConfig);
 client.connect();
 
-app.get("/", async (req, res) => {
+app.get("/rbgquotes", async (req, res) => {
   try {
     const dbres = await client.query('select * from pastebindb');
     res.json(dbres.rows);
@@ -44,7 +44,7 @@ app.get("/", async (req, res) => {
 // 1st. parameters in your endpoint
 // 2. mysterious
 // 3. request body shape
-app.post<{}, {}, Quotes>("/", async (req, res) => {
+app.post<{}, {}, Quotes>("/rbgquotes", async (req, res) => {
   try {
     const { input } = req.body;
     const newQuote = await client.query("INSERT INTO pastebindb (input) VALUES($1)", [input]);
