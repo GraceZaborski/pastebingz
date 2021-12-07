@@ -21,6 +21,10 @@ const dbConfig = {
 
 const app = express();
 
+interface Quotes {
+  input: string
+}
+
 app.use(express.json()); //add body parser to each following route handler
 app.use(cors()) //add CORS support to each following route handler
 
@@ -37,16 +41,30 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+// 1st. parameters in your endpoint
+// 2. mysterious
+// 3. request body shape
+app.post<{}, {}, Quotes>("/", async (req, res) => {
   try {
-    const { quotes } = req.body
-    const newQuote = await client.query("INSERT INTO pastebindb (input) VALUES($1) RETURNING *", [quotes])
-    res.json(newQuote.rows)
+    const { input } = req.body;
+    const newQuote = await client.query("INSERT INTO pastebindb (input) VALUES($1)", [input]);
+    res.json(newQuote.rows[0]);
   }
   catch (error) {
     console.error(error.message)
   }
 });
+
+//to do app post code
+// app.post("/todos", async (req, res) => {
+//   try {
+//       const { description } = req.body;
+//       const newTodo = await client.query("INSERT INTO perntodo (description) VALUES($1) RETURNING *", [description]);
+//       res.json(newTodo.rows[0])
+//   } catch (err) {
+//       console.error(err.message)
+//   }
+// })
 
 
 //Start the server on the given port
