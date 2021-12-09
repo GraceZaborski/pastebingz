@@ -5,7 +5,7 @@ CREATE table pastebindb (
 )
 
 --Get all the quotes (our input) from database
-SELECT * FROM pastebindb
+SELECT * FROM pastebindb LIMIT 10 ORDER BY index desc
 
 -- Add a quote to the database
 INSERT INTO pastebindb (input) VALUES(<"Quote">)
