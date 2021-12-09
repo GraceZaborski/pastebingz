@@ -33,7 +33,7 @@ client.connect();
 
 app.get("/rbgquotes", async (req, res) => {
   try {
-    const dbres = await client.query('select * from pastebindb');
+    const dbres = await client.query('select * from pastebindb limit 5');
     res.json(dbres.rows);
   }
   catch (error) {

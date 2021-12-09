@@ -9,3 +9,5 @@ SELECT * FROM pastebindb
 
 -- Add a quote to the database
 INSERT INTO pastebindb (input) VALUES(<"Quote">)
+
+
