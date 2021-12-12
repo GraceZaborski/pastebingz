@@ -57,7 +57,7 @@ app.post<{}, {}, Quotes>("/rbgquotes", async (req, res) => {
   }
 });
 
-app.delete<{ index: number }, {}, Quotes>("/rbgquotes/:id", async (req, res) => {
+app.delete<{ index: number }, {}, Quotes>("/rbgquotes/:index", async (req, res) => {
   try {
     const { index } = req.params
     const deletedPaste = await client.query("DELETE from pastebindb WHERE index = ($1) RETURNING *", [index]);
