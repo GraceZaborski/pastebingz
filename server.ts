@@ -24,6 +24,7 @@ const app = express();
 interface Quotes {
   input: string
   title: string
+  index: number
 }
 
 app.use(express.json()); //add body parser to each following route handler
@@ -55,6 +56,16 @@ app.post<{}, {}, Quotes>("/rbgquotes", async (req, res) => {
     console.error(error.message)
   }
 });
+
+app.delete<{ index: number }, {}, Quotes>("/rbgquotes/:id", async (req, res) => {
+  try {
+    const { index } = req.params
+    const deletedPaste = await client.query("DELETE from pastebindb WHERE index = ($1) RETURNING *", [index]);
+    res.json("This quote was deleted: " + deletedPaste.rows[0].description);
+  } catch (error) {
+    console.error(error.message)
+  }
+})
 
 //to do app post code
 // app.post("/todos", async (req, res) => {
