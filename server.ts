@@ -23,6 +23,7 @@ const app = express();
 
 interface Quotes {
   input: string
+  title: string
 }
 
 app.use(express.json()); //add body parser to each following route handler
@@ -46,8 +47,8 @@ app.get("/rbgquotes", async (req, res) => {
 // 3. request body shape
 app.post<{}, {}, Quotes>("/rbgquotes", async (req, res) => {
   try {
-    const { input } = req.body;
-    const newQuote = await client.query("INSERT INTO pastebindb (input) VALUES($1)", [input]);
+    const { input, title } = req.body;
+    const newQuote = await client.query("INSERT INTO pastebindb (input, title) VALUES($1, $2)", [input, title]);
     res.json(newQuote.rows[0]);
   }
   catch (error) {

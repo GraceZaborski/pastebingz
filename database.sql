@@ -1,7 +1,7 @@
 -- Make a database
 CREATE table pastebindb (
     index serial primary key,
-    input varchar(255)
+    input varchar(10000) not null
 )
 
 --Get all the quotes (our input) from database
