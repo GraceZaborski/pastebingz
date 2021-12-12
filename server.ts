@@ -61,7 +61,7 @@ app.delete<{ index: number }, {}, Quotes>("/rbgquotes/:id", async (req, res) => 
   try {
     const { index } = req.params
     const deletedPaste = await client.query("DELETE from pastebindb WHERE index = ($1) RETURNING *", [index]);
-    res.json("This quote was deleted: " + deletedPaste.rows[0].description);
+    res.json("This quote was deleted: " + deletedPaste.rows[0].input);
   } catch (error) {
     console.error(error.message)
   }
